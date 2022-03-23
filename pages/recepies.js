@@ -27,8 +27,8 @@ export default function Recepies({ recepies }) {
 }
 
 export async function getServerSideProps(context) {
-    const URL=process.env.NODE_ENV ==='PRODUCTION'? process.env.PROD_URL : process.env.NEXT_LOCAL_URL
-  const data = await fetch(`${URL}/api/recepies`)
+    //const URL=process.env.NODE_ENV ==='PRODUCTION'? process.env.PROD_URL : process.env.NEXT_LOCAL_URL
+  const data = await fetch(`https://api-routes-demo1.vercel.app/api/recepies`)
   const recepies = await data.json();
   return {
     props: { recepies },
