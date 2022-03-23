@@ -1,15 +1,16 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
 
-export default function Home({ recepies }) {
+
+export default function Recepies({ recepies }) {
   return (
     <div className="container">
       <Head>
-        <title>API-Routes Demo APP</title>
+        <title>Recepies Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div>
+          <h2>Recepies Page</h2>
         {recepies &&
           recepies.map((recepie) => (
             <>
@@ -26,10 +27,9 @@ export default function Home({ recepies }) {
 }
 
 export async function getServerSideProps(context) {
-  const client = await clientPromise;
-  const db = client.db("ak-restaurant");
-  const data = await db.collection("products").find({}).toArray();
-  const recepies = JSON.parse(JSON.stringify(data));
+    const URL=process.env.NODE_ENV ==='PRODUCTION'? process.env.PROD_URL : process.env.NEXT_LOCAL_URL
+  const data = await fetch(`${URL}/api/recepies`)
+  const recepies = await data.json();
   return {
     props: { recepies },
   };
